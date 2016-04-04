@@ -18,11 +18,13 @@ Met dit project wil ik laten zien hoe de performance en toegankelijkheid van de 
 Als een link in de website naar een nieuwe tab verwijst moet er gebruik gemaakt worden van het `<a>` element en als de link naar een element binnen de pagina verwijst dient er gebruik gemaakt te worden van het `<button>` element.
 
 ![](IMG/button.png)
+
 Hier is het een ```<button>```
 
 -
 
 ![](IMG/a.png)
+
 Hier is het een ```<a>```
 
 ## Outline
@@ -67,11 +69,13 @@ Op kleine schermen worden dezelde images ingeladen als op grote schermen terwijl
 
 
 Zonder srcset getest op een iPhone 5
+
 ![](IMG/srcset1.png)
 
 -
 
 Met srcset getest op een iPhone 5
+
 ![](IMG/srcset2.png)
 
 ## Kleuren
