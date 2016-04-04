@@ -3,6 +3,7 @@
 var gulp   = require('gulp');
 var gutil  = require('gulp-util');
 var config  = require('./config');
+var browserSync = require('browser-sync');
 
 /**
  * Clean up the index file
@@ -151,3 +152,16 @@ gulp.task('docs:docstyles', [], function() {
 });
 
 gulp.task('docs', ['docs:docstyles', 'docs:projectstyles', 'docs:styleguide']);
+
+
+
+
+gulp.task('browser-sync', function() {
+    return browserSync ({
+        proxy: 'http://localhost:3000'
+    });
+
+});
+
+
+

@@ -1,161 +1,129 @@
-Part-up
-=================
+# Projectweek 2 - Solve, Debug & Optimize website
 
-[![Join the chat at https://gitter.im/part-up/part-up](https://badges.gitter.im/part-up/part-up.svg)](https://gitter.im/part-up/part-up?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+<img src="IMG/partup-logo.png" width="220px">
 
-# Installation
-
-- ensure [imagemagick][im] is installed (OS X: `brew
-  install imagemagick`)
-- ensure [meteor](https://www.meteor.com/install) is installed
-- make sure you have all the correct environment variables set, which can be done in two ways:
-    1. generate the development configuration using `cd config/development && ./decrypt` (this requires a password, which can be requested from the Part-up team)
-    2. rename the file `config/development/env.sh.dist` to `config/development/env.sh` and fill in all the required credentials
-- `./start` (in the root folder of the app)
-- App running at: http://localhost:3000/
-
-[im]: http://www.imagemagick.org/
-
-# Frontend
-
-## Structure
-We have four types of application parts: *layout*, *page*, *widget* and *small component*. The explanation below points out their uses. Grahpic: **app/packages/partup:client-pages/app** and for the modals **app/packages/partup:client-pages/modal**.
-
-### Layout
-Layouts are the top-level templates. They can contain a header, current page placeholder and footer. The Sass file should only contain header and footer positioning rules. The js file should keep track of the state of the template and handle navigation functionality.
-
-### Page
-Pages can contain single components with page-specific functionality, widgets (packages) and sub-pages. A page, in fact, only represents a composition. Therefore, the Sass file should only contain position defenitions of the inside components. The js file should handle the page states and navigation functionality if subpages are present. Pages are directly binded to routes.
-
-### Widget (packages)
-With a funcionality, you can think of a widget which will fulfill one standalone functionality. Functionalities that tie the app together (like a navigation bar) should not be declared as a package, because it’s not a widget with a standalone functionality. The Sass file may only contain component composition rules. When a widget is called WidgetsPartupActivities, the package should be called partup:client-widgets-partup-activities.
-
-### Small component
-The whole app is made up of small styled components. These components are not functional by themselves, but only provides styling. For example: buttons, inputs, titles, paragraphs and menus. Each component should be defined as a Sass class prefixed with “pu-”, for example “pu-button”. Be aware not to define any styling dealing with the position of the component inside its parent or relative to its siblings.
-
-### Adding an icon
-1. `cd app/`
-2. `meteor add partup:iconfont-generator`
-3. Add the new icon SVG to the */client/icons* folder
-4. Wait for `[iconfont] generating`
-5. In */client/stylesheets/font-faces* a new `_picons.scss` is generated, convert the content to `.sass` at (http://www.sasstoscss.com/) and replace the contents of `icons.sass` NOTE: `icons.sass` cannot be used to change icon styles, do this in */client/stylesheets/components/pu-icons.sass*
-6. `meteor remove partup:iconfont-generator`
-7. You now have a new icon added to the project *cheers*. Push the icon file changes to your current branch.
+Met dit project wil ik laten zien hoe de performance en toegankelijkheid van de website Part-up verbeterd kan worden.
+##### [part-up.com](part-up.com)  |  Alle testen zijn gedaan op ![](IMG/netwerk.png)
 
 
-# Backend
-## Collections manipulation flow
+[](IMG/screenshot.png)
+[](IMG/timeline1.png)
 
-- Frontend uses `Meteor.call` to insert, update or remove documents in a collection.
-- Backend checks if the logged in user is authorised to perform the given operation (inside a Meteor method).
-- Backend saves document in mongodb
-- Backend emits an event that corresponds with the given CRUD operation, e.g. `inserted, updated or removed` (inside a Meteor method).
-- Handlers are created that have to react to these created events, for instance when inserting an update or notification.
 
-# Fixtures
 
-- the following users are created automatically (all with password "user"):
-    - user@example.com
-    - john@example.com
-    - judy@example.com
-    - admin@example.com
-- admin created all the tribes
-- john is member of closed tribe and created a closed partup
-- user is member of open and invite tribe and created a partups in these tribes
-- judy is invited for closed tribe
+## Knoppen
 
-# Unit / Integration tests
+`<a>` vs. `<buttons>`
 
-- disable tests
-    - `cd app`
-    - `meteor remove mike:mocha`
-- enable tests
-    - `cd app`
-    - `meteor add mike:mocha`
-    - `meteor add xolvio:cucumber`
+Als een link in de website naar een nieuwe tab verwijst moet er gebruik gemaakt worden van het `<a>` element en als de link naar een element binnen de pagina verwijst dient er gebruik gemaakt te worden van het `<button>` element.
 
-# DevOps
+![](IMG/button.png)
+Hier is het een ```<button>```
 
-## Quick deployment
-- `cd devops`
-- `./devops provision <environment> all --tags=app` (provide the SHA hash of the commit to be deployed, make sure it is build by Jenkins upfront)
+-
 
-## MongoDB
+![](IMG/a.png)
+Hier is het een ```<a>```
 
-- Connecting: `mongo "<host>/<database>" -u "<user>" -p "<password>"`
-- Dumping: `mongodump "<host>" --db "<database>" -u "<user>" -p "<password>" -o \`date +%s\``
-- Restoring: `mongorestore "<host>" --db "<database>" -u "<user>" -p "<password>"`
-- Restoring Meteor LoginServiceConfiguration: `mongorestore "<host>" --db "<database>" -u "<user>" -p "<password>" -c "meteor_accounts_loginServiceConfiguration" <bson file from dump>`
-- Emptying all Collections (run in mongo shell): `db.getCollectionNames().forEach(function(collectionName) { db[collectionName].remove({}); });`
-- Make user (super)admin: `db.users.update({ '_id': '<insertuseridhere>' }, { $set: { 'roles': ['admin'] } })`
-- Find faulty / wrongly uploaded pictures: `db.getCollection('cfs.images.filerecord').find({'copies':{$exists:false}})`
-- Overwrite the language of a specific part-up: `db.getCollection('partups').find({'_id':'<<partupid>>'},{$set: {'language':'nl'}});`
+## Outline
 
-## Unit testing
-- `meteor run --test`
+`outline: none` zorgt ervoor dat de focus niet gezien kan worden zodra er door de website heen getabed wordt. Er zijn mensen die hun muis niet gebruiken en in plaats daarvan alleen gebruik maken van hen toetsenbord. Voor deze mensen zou het erg prettig zijn dat zij kunnen zien waar zij zich in de website bevinden. 
 
-## Required server environment variables
+![](IMG/focus.png)
+
+
+## Images
+
+Door middel van de images te verkleinen hoeft er minder ingeladen te worden waardoor de website sneller wordt. Met een tooltje heb ik zelf de images geoptimaliseerd maar ik zou adviseren om dit te automatiseren met Gulp.
+
+> Saved 573,7KB out of 2,2MB. 45,7% per file on average 
+browsers
+
+Alle plaatjes die worden ingeladen op de homepagina duurde totaal: **4131 ms** 
+![](IMG/img.png)
+
+Nadat de plaatjes geoptimaliseerd waren duurde het: **2342 ms** 
+![](IMG/img2.png)
+
+
+|Images verkleinen|	Voor	         | Na          | Verschil  |
+|----| ------------- |---------------|-------|
+|Laadtijd| 4131 ms      | 2341 ms | 1789 ms|
+
+
+## Srcset
+
+Op kleine schermen worden dezelde images ingeladen als op grote schermen terwijl kleine schermen helemaal niet zn grote resolutie nodig hebben. Met het srcset attribute kun je er voor zorgen dat de browser het juiste formaat plaatje bij een bepaalde afmeting neerzet. Op deze manier voorkom je dat er op een mobile device een plaatje van 1300 px wordt ingeladen.
+
 ```
-NODE_ENV
-MONGO_URL
-ROOT_URL
-AWS_ACCESS_KEY_ID
-AWS_SECRET_ACCESS_KEY
-AWS_BUCKET_REGION
-AWS_BUCKET_NAME
-FACEBOOK_APP_ID
-FACEBOOK_APP_SECRET
-LINKEDIN_API_KEY
-LINKEDIN_SECRET_KEY
-TZ = Europe/Amsterdam
-MAIL_URL
-FLICKR_API_KEY
-FLICKR_SECRET_KEY
-NEW_RELIC_LICENSE_KEY
-NEW_RELIC_APP_NAME
-NEW_RELIC_NO_CONFIG_FILE = true
-KADIRA_APP_ID
-KADIRA_APP_SECRET
-METEOR_SETTINGS = {"public":{"analyticsSettings":{"Google Analytics":{"trackingId":""}}}}
-GOOGLE_API_KEY
+<img 
+    src="/images/about-image.jpg" 
+    alt="Groepsfoto" class="pu-image pu-image-content"
+    srcset="/images/about-image500.jpg 500w,
+            /images/about-image650.jpg 650w,
+            /images/about-image800.jpg 800w,
+            /images/about-image.jpg 1200w">
 ```
 
-## data dumps
 
-### clean userdump
-- regular mongo dump command
-- unpack bson `for f in *.bson; do bsondump "$f" > "$f.json"; done`
-- `cat users.bson.json | sed 's/accessToken" : "[^"]*"/accessToken" : ""/g' > users.bson-clean.json`
-- `cat users.bson-clean.json | sed 's/hashedToken" : "[^"]*"/hashedToken" : ""/g' > users.bson-clean-2.json`
-- `cat users.bson-clean-2.json | sed 's/bcrypt" : "[^"]*"/bcrypt" : ""/g' > users.bson-clean-3.json`
-- `cat users.bson-clean-3.json | sed 's/token" : "[^"]*"/token" : ""/g' > users.bson-clean-4.json`
+Zonder srcset getest op een iPhone 5
+![](IMG/srcset1.png)
 
-## editing env.sh-ecrypted
+-
 
-`cd config/development && ansible-vault edit env.sh-encrypted`
+Met srcset getest op een iPhone 5
+![](IMG/srcset2.png)
 
-# License
+## Kleuren
 
-Copyright (C) 2016 Part-up
+Het is belangrijk om te zorgen voor een hoog contrast zodat ook minder goed ziende mensen alles goed kunnen lezen.
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as
-published by the Free Software Foundation, either version 3 of the
-License, or (at your option) any later version.
+![](IMG/contrast.png)
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU Affero General Public License for more details.
+Het contrast van dit element op de website is erg slecht. Ook kwam dit uit de test [Contrast Ratio van Lea Verou](http://leaverou.github.io/contrast-ratio/#%23cacaca-on-%23f9f9f9).
 
-You should have received a copy of the GNU Affero General Public License
-along with this program. If not, see <http://www.gnu.org/licenses/>.
+<img src="IMG/contrastRatio.png" width="400px">
 
-An interactive user interface displays "Appropriate Legal Notices" to the
-extent that it includes a convenient and prominently visible feature
-that (1) displays an appropriate copyright notice, and (2) tells the user
-that there is no warranty for the work (except to the extent that warranties
-are provided), that licensees may convey the work under this License, and
-how to view a copy of this License. If the interface presents a list of user
-commands or options, such as a menu, a prominent item in the list meets this
-criterion.
+
+Uit de test komt een **1.6** waar de hoogste score **21** is.
+Voor slechtziende mensen is deze tekst niet te lezen. Mijn advies is om te kiezen voor een hoger contrast.
+
+
+## Responsive
+De homepage van de website is responsive. De rest van de pagina's zijn **niet** responsive. Mijn advies is om alle pagina's responsive te maken zodat gebruikers op kleinere schermen ook goed gebruik kunnen maken van de website en niet horizontaal moeten scrollen.
+
+
+<img src="IMG/mobile.png" width="250px">
+<img src="IMG/mobile2.png" width="250px">
+
+
+## Cursor
+Een cursor verteld wat de gebruiker met bepaalde elementen wel en niet kan doen. Zodra er een handje verschijnt weet de gebruiker dat hij kan klikken. Op het onderstaande element is een `:hover` en een `cursor:pointer` toegepast terwijl het element helemaal niet klikbaar is. Op deze manier wekt het wel de intentie om er op te gaan klikken waardoor er verwarring ontstaat.
+
+<img src="IMG/cursor.png">
+
+-
+
+Onderstaand element is opgemaakt als een `<a>` element terwijl het logo nergens heen verwijst `href="#"`
+
+<img src="IMG/link.png">
+
+
+
+## Critical css
+
+Er kan performance winst behaald worden door middel van critical css. De gebruiker zal eerder 'iets' te zien krijgen op de website waardoor de gebruiker ziet dat er 'iets' gebeurd en niet op niets zit te wachten. Op deze manier zal de gebruiker minder snel geneigd zijn om de website te verlaten als het laden lang duurt. 
+
+**Zonder critical css**
+![](IMG/meaningfulRender1.png)
+
+-
+**Met critical css**
+![](IMG/meaningfulRender2.png)
+
+
+``` 
+<head>
+	<style>.pu-header{min-width:320px;position:relative;z-index:5}.pu-header .pu-sub-mobilebar{background-color:#57c0c9;}.pu-header .pu-sub-logo{text-align:center}.pu-header .pu-sub-logo h1 span{display:none}.pu-header .pu-sub-logo .pu-brand{display:inline-block;margin-top:17px;margin-bottom:5px}.pu-header .pu-sub-nav{float:left;margin-left:10px}.pu-header .pu-sub-personal{float:right;margin-right:10px}.pu-header-desktop{background-color:#57c0c9;height:60px}.pu-header-desktop .pu-sub-mobilebar{background-color:transparent;border-bottom:none}.pu-header-desktop .pu-sub-logo{float:left;width:157px}.pu-header-desktop .pu-sub-nav{float:left;margin-left:0}.pu-header-desktop .pu-sub-personal{float:right;margin-right:0}.pu-header-modal{background-color:#f9f9f9;text-align:center;height:70px}.pu-header-modal.pu-header-progress .pu-progresspager{padding-top:70px;top:0}.pu-header-progress{font-family:"open-sans", sans-serif;font-size:15px;font-weight:600;position:relative}.pu-header-progress .pu-progresspager{position:absolute;top:100%;left:50%;-webkit-transform:translateX(-50%);-ms-transform:translateX(-50%);transform:translateX(-50%);margin-top:-1px;z-index:1}.pu-header-progress .pu-button{margin-top:9px}@media screen and (min-width: 992px){.pu-header{background-color:#57c0c9;height:60px}</style>
+</head>
+```

@@ -1,7 +1,6 @@
 <template name="app_home">
 
-    <article class="pu-page">
-        <div class="pu-composition pu-composition-home">
+    <article class="pu-page pu-composition pu-composition-home">
 
             <!-- Header -->
             <header class="pu-sub-header">
@@ -10,27 +9,27 @@
                         <span>{{_ 'pages-app-home-loggedin-heading' greeting=greeting name=firstName }}</span>
                     </h2>
                     <p class="pu-paragraph-inverted">{{_ 'pages-app-home-loggedin-paragraph' }}</p>
-                    <p>
-                        <ul class="pu-list pu-list-horizontal pu-list-buttons">
-                            <li><a href="{{ pathFor 'create' }}" class="pu-button pu-button-large">{{_ 'pages-app-home-loggedin-start_partup' }}</a></li>
-                            <li><a href="{{ pathFor 'discover' }}" class="pu-button pu-button-large">{{_ 'pages-app-home-loggedin-discover' }}</a></li>
-                        </ul>
-                    </p>
+                    
+                    <ul class="pu-list pu-list-horizontal pu-list-buttons">
+                        <li><a href="{{ pathFor 'create' }}" class="pu-button pu-button-large">{{_ 'pages-app-home-loggedin-start_partup' }}</a></li>
+                        <li><a href="{{ pathFor 'discover' }}" class="pu-button pu-button-large">{{_ 'pages-app-home-loggedin-discover' }}</a></li>
+                    </ul>
+                    
                 {{ else }}
                     <h2 class="pu-title pu-title-serif pu-title-home">
                         <span>{{_ 'pages-app-home-heading' }}</span>
                     </h2>
                     <p class="pu-paragraph-inverted">{{_ 'pages-app-home-paragraph' }}</p>
-                    <p>
+                   
                         {{# if videoWatched }}
                             <a href="{{ pathFor 'register' }}" class="pu-button pu-button-large">{{_ 'pages-app-home-signup' }}</a>
                         {{ else }}
-                            <a href="#" class="pu-button pu-button-large" data-start-video>
+                            <button href="#" class="pu-button pu-button-large" data-start-video>
                                 <i class="picon-caret-right"></i>
                                 {{_ 'pages-app-home-videobutton' }}
-                            </a>
+                            </button>
                         {{/ if }}
-                    </p>
+                    
                 {{/ if }}
 
                 <div class="pu-wrap pu-wrap-video">
@@ -44,7 +43,7 @@
 
             <!-- Featured staff-pick -->
             <section class="pu-sub-section pu-sub-section-accent pu-sub-section-smaller">
-                <div class="pu-wrap pu-wrap-home">
+                <article class="pu-wrap pu-wrap-home">
                     <p class="pu-textline pu-textline-subtle">
                         <span>{{_ 'pages-app-home-featured_partup-heading' }}</span>
                     </p>
@@ -56,26 +55,26 @@
                             {{> Spinner }}
                         </div>
                     {{/ if }}
-                </div>
+                </article>
             </section>
 
-            <section class="pu-sub-section pu-sub-section-gradient">
+           <section class="pu-sub-section pu-sub-section-gradient">
 
                 <div class="pu-wrap pu-wrap-home pu-sub-article">
 
                     <!-- Popular part-ups-->
-                    <section class="pu-sub-subsection pu-sub-subsection-popularpartups">
+                    <article class="pu-sub-subsection pu-sub-subsection-popularpartups">
                         <header class="pu-sub-popularpartupsheader">
                             <h3 class="pu-title pu-title-homesection">{{_ 'pages-app-home-discover-partups-popular-heading' }}</h3>
                             <p class="pu-sub-discoverbutton">
                                 <a href="{{ pathFor 'discover' }}" class="pu-button">{{_ 'pages-app-home-discover-partups-viewall-button' }}</a>
                             </p>
                         </header>
-                        <div class="pu-sub-partups">
+                        <section class="pu-sub-partups">
                             {{# ColumnTilesLayout instance=columnTilesLayout }}
-                                <div class="pu-tile">
+                                <article class="pu-tile">
                                     {{> PartupTile }}
-                                </div>
+                                </article>
                             {{/ ColumnTilesLayout }}
 
                             {{# if popularPartupsLoading }}
@@ -83,36 +82,38 @@
                                     {{> Spinner }}
                                 </div>
                             {{/ if }}
-                        </div>
+                        </section>
                         <footer class="pu-sub-popularpartupsfooter">
                             <p class="pu-sub-discoverbutton">
-                                <a href="{{ pathFor 'discover' }}" class="pu-button">{{_ 'pages-app-home-discover-partups-viewall-button' }}</a>
+                                <button href="{{ pathFor 'discover' }}" class="pu-button">{{_ 'pages-app-home-discover-partups-viewall-button' }}</button>
                             </p>
                         </footer>
-                    </section>
+                    </article>
 
                 </div>
 
+
                 <!-- Start your own part-up -->
                 <section class="pu-sub-subsection pu-sub-article">
-                    <div class="pu-wrap pu-wrap-home">
+                    <article class="pu-wrap pu-wrap-home">
                         {{> CallToAction }}
-                    </div>
+                    </article>
 
                 </section>
 
                 <!-- Philosophy -->
                 <section class="pu-sub-subsection pu-sub-article">
-                    <div class="pu-wrap pu-wrap-home">
+                    <article class="pu-wrap pu-wrap-home">
                         {{> Philosophy }}
-                    </div>
+                    </article>
                 </section>
+
 
             </section>
 
             <!-- Business -->
             <section class="pu-sub-section pu-sub-section-last">
-                <div class="pu-wrap pu-wrap-home">
+                <article class="pu-wrap pu-wrap-home">
                     {{# if featured_networks.length }}
                         {{> FeaturedNetworks networks=featured_networks }}
                     {{ else }}
@@ -120,9 +121,9 @@
                             {{> Spinner }}
                         </div>
                     {{/ if }}
-                </div>
+                </article>
             </section>
-        </div>
+        
     </article>
 
 </template>
